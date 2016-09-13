@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.3.7 on 2016-09-09.
+ * Generated for Laravel 5.3.7 on 2016-09-13.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -11699,6 +11699,109 @@ namespace {
          */
         public static function getNames(){
             return \Illuminate\View\Factory::getNames();
+        }
+        
+    }
+
+
+    class Flash extends \Kagga\Flash\Facade\Flash{
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function create($title, $message, $level, $key = 'message'){
+            return \Kagga\Flash\Flash::create($title, $message, $level, $key);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function info($title, $message){
+            return \Kagga\Flash\Flash::info($title, $message);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function error($title, $message){
+            return \Kagga\Flash\Flash::error($title, $message);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function warning($title, $message){
+            return \Kagga\Flash\Flash::warning($title, $message);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function success($title, $message){
+            return \Kagga\Flash\Flash::success($title, $message);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function overlay($title, $message, $level = 'success'){
+            return \Kagga\Flash\Flash::overlay($title, $message, $level);
+        }
+        
+    }
+
+
+    class JsValidator extends \Proengsoft\JsValidation\Facades\JsValidatorFacade{
+        
+        /**
+         * Creates JsValidator instance based on rules and message arrays.
+         *
+         * @param array $rules
+         * @param array $messages
+         * @param array $customAttributes
+         * @param null|string $selector
+         * @return \Proengsoft\JsValidation\JavascriptValidator 
+         * @static 
+         */
+        public static function make($rules, $messages = array(), $customAttributes = array(), $selector = null){
+            return \Proengsoft\JsValidation\JsValidatorFactory::make($rules, $messages, $customAttributes, $selector);
+        }
+        
+        /**
+         * Creates JsValidator instance based on FormRequest.
+         *
+         * @param $formRequest
+         * @param null $selector
+         * @return \Proengsoft\JsValidation\JavascriptValidator 
+         * @throws FormRequestArgumentException
+         * @static 
+         */
+        public static function formRequest($formRequest, $selector = null){
+            return \Proengsoft\JsValidation\JsValidatorFactory::formRequest($formRequest, $selector);
+        }
+        
+        /**
+         * Creates JsValidator instance based on Validator.
+         *
+         * @param \Illuminate\Validation\Validator $validator
+         * @param string|null $selector
+         * @return \Proengsoft\JsValidation\JavascriptValidator 
+         * @static 
+         */
+        public static function validator($validator, $selector = null){
+            return \Proengsoft\JsValidation\JsValidatorFactory::validator($validator, $selector);
         }
         
     }

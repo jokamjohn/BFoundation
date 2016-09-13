@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'My Application',
+    'name' => 'BlueCollar',
 
     /*
     |--------------------------------------------------------------------------
@@ -177,7 +177,13 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        /**
+         * Third-party Service Providers
+         */
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        Kagga\Flash\FlashServiceProvider::class,
+        Proengsoft\JsValidation\JsValidationServiceProvider::class,
 
     ],
 
@@ -225,6 +231,12 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+        /**
+         * Third-party facades
+         */
+        'Flash' => Kagga\Flash\Facade\Flash::class,
+        'JsValidator'   => Proengsoft\JsValidation\Facades\JsValidatorFacade::class,
 
     ],
 

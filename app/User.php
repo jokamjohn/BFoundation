@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Notifications\EmployerWelcome;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -15,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'firstName', 'lastName', 'email', 'password', 'birthDate', 'admin', 'status', 'employer','token','verified'
     ];
 
     /**
@@ -26,4 +27,28 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**Create a e-mail confirmation token when saving a user.
+     *
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user){
+            $user->token = str_random(32);
+        });
+    }
+
+    /**Alter these fields after the user verifies their email addresses.
+     *
+     */
+    public function confirmEmail()
+    {
+        $this->verified = true;
+        $this->token = null;
+        $this->save();
+        $this->notify(new EmployerWelcome($this));
+        return $this;
+    }
 }
