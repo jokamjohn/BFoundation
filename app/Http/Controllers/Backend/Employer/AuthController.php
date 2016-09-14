@@ -6,13 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\EmployerLoginRequest;
 use App\Http\Requests\EmployerRegisterRequest;
 use App\Notifications\EmployerEmailVerification;
-use App\Notifications\EmployerWelcome;
 use App\User;
 use Auth;
 use Bluecollar\Traits\Employers\Auth\LoginEmployers;
 use Bluecollar\Traits\Employers\Auth\RegisterEmployers;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AuthController extends Controller
 {
@@ -20,7 +18,7 @@ class AuthController extends Controller
     use RegisterEmployers;
     use LoginEmployers;
 
-    protected $redirectPath = '/';
+    protected $redirectPath = '/employer/dashboard';
 
     /**
      * EmployerAuthController constructor.
@@ -50,7 +48,7 @@ class AuthController extends Controller
     {
         $user = $this->createUser($request);
 
-        Auth::login($user);
+        Auth::login($user);//TODO show note to user to verify mail.
 
         $user->notify(new EmployerEmailVerification($user->token));
 

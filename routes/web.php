@@ -16,12 +16,15 @@ Route::get('/', function () {
 });
 
 Route::group(["namespace" => "Backend\\Employer", 'prefix' => 'employer'], function (){
+    //Employer Auth
     Route::get('/login',['as' => 'auth.employer.login', 'uses' => 'AuthController@login']);
     Route::post('/login',['as' => 'auth.employer.post.login', 'uses' => 'AuthController@postLogin']);
     Route::get('/register',['as' => 'auth.employer.register', 'uses' => 'AuthController@register']);
     Route::post('/register',['as' => 'auth.employer.post.register', 'uses' => 'AuthController@postRegister']);
     Route::get('auth/email/verification/{token}',['as'=> 'auth.employer.verify.email', 'uses' =>'AuthController@confirmEmail']);
 
+    //Dashboard
+    Route::get('/dashboard', ['as' => 'employer.dashboard', 'uses' => 'DashboardController@index']);
 });
 
 Route::group(['namespace' => 'Auth'], function (){
