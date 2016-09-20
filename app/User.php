@@ -51,4 +51,14 @@ class User extends Authenticatable
         $this->notify(new EmployerWelcome($this));
         return $this;
     }
+
+    /**Get the user who posted these jobs.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function jobs()
+    {
+        return $this->belongsToMany(Job::class)->withTimestamps();
+    }
+
 }

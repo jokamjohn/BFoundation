@@ -25,6 +25,11 @@ Route::group(["namespace" => "Backend\\Employer", 'prefix' => 'employer'], funct
 
     //Dashboard
     Route::get('/dashboard', ['as' => 'employer.dashboard', 'uses' => 'DashboardController@index']);
+
+    //Jobs
+    Route::resource('/job','JobController');
+
+
 });
 
 Route::group(['namespace' => 'Auth'], function (){

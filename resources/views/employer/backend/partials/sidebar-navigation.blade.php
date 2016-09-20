@@ -17,8 +17,8 @@
         </ul>
     </div>
     <ul class="main-menu main-ul">
-        <li @if (Request::is('#')) class="active" @endif><a href="#"><i class="zmdi zmdi-home"></i> Home</a></li>
-        <li @if (Request::is('#')) class="active" @endif><a href="#"><i class="zmdi zmdi-collection-bookmark"></i> Posts <span class="label label-default label-totals">1</span></a></li>
+        <li @if (Request::is('employer/dashboard')) class="active" @endif><a href="{{ route('employer.dashboard') }}"><i class="zmdi zmdi-home"></i> Home</a></li>
+        <li @if (Request::is('employer/job/*')) class="active" @endif><a href="{{ route('job.index') }}"><i class="zmdi zmdi-collection-bookmark"></i> Jobs <span class="label label-default label-totals">1</span></a></li>
         <li @if (Request::is('#')) class="active" @endif><a href="#"><i class="zmdi zmdi-labels"></i> Tags <span class="label label-default label-totals">2</span></a></li>
         <li @if (Request::is('#')) class="active" @endif><a href="#"><i class="zmdi zmdi-cloud-upload"></i> Uploads</a></li>
         <li @if (Request::is('#')) class="active" @endif><a href="#"><i class="zmdi zmdi-wrench"></i> Tools</a></li>
