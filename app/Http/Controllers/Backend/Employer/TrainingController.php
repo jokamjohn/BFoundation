@@ -4,29 +4,26 @@ namespace App\Http\Controllers\Backend\Employer;
 
 use App\Category;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\JobCreateRequest;
 use Bluecollar\Command\CommandBus;
-use Bluecollar\Jobs\JobPublishedCommand;
+use Bluecollar\Training\TrainingPublishedCommand;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class JobController extends Controller
+class TrainingController extends Controller
 {
     /**
      * @var CommandBus
      */
     private $commandBus;
 
-
     /**
-     * JobController constructor.
+     * TrainingController constructor.
      * @param CommandBus $commandBus
      */
     public function __construct(CommandBus $commandBus)
     {
         $this->middleware('auth.employer');
-
         $this->commandBus = $commandBus;
     }
 
@@ -37,9 +34,9 @@ class JobController extends Controller
      */
     public function index()
     {
-        $jobs = Auth::user()->jobs->where('deadline', '>=', Carbon::now());//Get only employer jobs
+        $trainings = Auth::user()->trainings->where('date', '>=', Carbon::now());
 
-        return view('employer.backend.job.index', compact('jobs'));
+        return view('employer.backend.training.index', compact('trainings'));
     }
 
     /**
@@ -51,22 +48,22 @@ class JobController extends Controller
     {
         $categories = Category::get()->pluck('name', 'id');
 
-        return view('employer.backend.job.create', compact('categories'));
+        return view('employer.backend.training.create', compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param JobCreateRequest $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(JobCreateRequest $request)
+    public function store(Request $request)
     {
-        $command = new JobPublishedCommand($request->get('title'), $request->get('phoneNumber'), $request->get('contactName'), $request->get('positions'), $request->get('location'), $request->get('description'), $request->get('deadline'), $request->get('category'));
+        $command = new TrainingPublishedCommand($request->get('title'), $request->get('phoneNumber'), $request->get('contactName'), $request->get('venue'), $request->get('location'), $request->get('description'), $request->get('date'), $request->get('category'), $request->get('organisation'));
 
         $this->commandBus->execute($command);
 
-        return redirect()->route('job.index');
+        return redirect()->route('training.index');
     }
 
     /**

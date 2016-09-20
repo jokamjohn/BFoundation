@@ -29,6 +29,9 @@ Route::group(["namespace" => "Backend\\Employer", 'prefix' => 'employer'], funct
     //Jobs
     Route::resource('/job','JobController');
 
+    //Trainings
+    Route::resource('/training', 'TrainingController');
+
 
 });
 

@@ -61,4 +61,13 @@ class User extends Authenticatable
         return $this->belongsToMany(Job::class)->withTimestamps();
     }
 
+    /**Get the trainings added by the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function trainings()
+    {
+        return $this->belongsToMany(Training::class)->withTimestamps();
+    }
+
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateJobUserTable extends Migration
+class CreateTrainingUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateJobUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('job_user', function (Blueprint $table) {
+        Schema::create('training_user', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('job_id')->unsigned();
+            $table->integer('training_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->timestamps();
 
-            $table->foreign('job_id')
+            $table->foreign('training_id')
                 ->references('id')
-                ->on('jobs')
+                ->on('trainings')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
@@ -41,7 +41,7 @@ class CreateJobUserTable extends Migration
     public function down()
     {
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-        Schema::dropIfExists('job_user');
+        Schema::drop('training_user');
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

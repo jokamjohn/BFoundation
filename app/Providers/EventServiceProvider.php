@@ -16,6 +16,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\JobPublished' => [
             'App\Listeners\SendJobNotification',
         ],
+        'App\Events\TrainingPublished' => [
+            'App\Listeners\SendTrainingNotification',
+        ],
     ];
 
     /**

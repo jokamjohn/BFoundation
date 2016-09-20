@@ -2,29 +2,31 @@
 
 namespace App\Events;
 
-use App\Job;
+use App\Training;
 use Illuminate\Broadcasting\Channel;
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Broadcasting\PresenceChannel;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class JobPublished
+class TrainingPublished
 {
     use InteractsWithSockets, SerializesModels;
     /**
-     * @var Job
+     * @var Training
      */
-    public $job;
+    public $training;
 
     /**
      * Create a new event instance.
      *
-     * @param Job $job
+     * @param Training $training
      */
-    public function __construct(Job $job)
+    public function __construct(Training $training)
     {
         //
-        $this->job = $job;
+        $this->training = $training;
     }
 
     /**

@@ -3,28 +3,28 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class Job extends Model
+class Training extends Model
 {
-    use SoftDeletes;
-
-    protected $fillable = [
-        'title', 'phoneNumber', 'contactName', 'positions', 'location', 'description', 'deadline', 'slug'
-    ];
+    protected $fillable = ['title', 'description',
+        'location', 'date', 'phoneNumber', 'contactName',
+        'organisation', 'categoryId', 'slug', 'venue'];
 
     protected $dates = [
-        'created_at', 'updated_at', 'deadline'
+        'created_at',
+        'updated_at',
+        'date',
+        'deleted_at'
     ];
 
-    /**Get the category of this job.
+    /**Get the user who added the training.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function category()
+    public function trainer()
     {
-        return $this->hasOne(Category::class);
+        return $this->belongsToMany(User::class)->withTimestamps();
     }
 
     /**
@@ -42,28 +42,22 @@ class Job extends Model
         return $count ? "{$slug}-{$count}" : $slug;
     }
 
-    /**Get the Jobs posted by this employer.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function employer()
-    {
-        return $this->belongsToMany(User::class)->withTimestamps();
-    }
-
     public function post($command)
     {
         $this->title = $command->title;
         $this->slug = $this->makeSlugFromTitle($command->title);
         $this->phoneNumber = $command->phoneNumber;
         $this->contactName = $command->contactName;
-        $this->positions = $command->positions;
+        $this->venue = $command->venue;
         $this->location = $command->location;
         $this->description = $command->description;
-        $this->deadline = $command->deadline;
-        $this->category_id = $command->categoryId;
+        $this->date = $command->date;
+        $this->organisation = $command->organisation;
+        $this->categoryId = $command->categoryId;
         $this->save();
 
         return $this;
     }
+
+
 }

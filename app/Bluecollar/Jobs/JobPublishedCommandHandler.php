@@ -23,6 +23,8 @@ class JobPublishedCommandHandler implements CommandHandler
 
     /**
      * JobPublishedCommandHandler constructor.
+     * @param User $user
+     * @param Job $job
      */
     public function __construct(User $user, Job $job)
     {
