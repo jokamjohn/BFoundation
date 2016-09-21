@@ -35,6 +35,14 @@ Route::group(["namespace" => "Backend\\Employer", 'prefix' => 'employer'], funct
 
 });
 
+Route::group([ "namespace" => "Frontend", 'prefix' => 'youth'], function (){
+    Route::get('/job/opportunities', ['as' => 'youth.jobs.index', 'uses' => 'FrontendController@jobs']);
+    Route::get('/job/opportunities/{slug}', ['as' => 'youth.job.show', 'uses' => 'FrontendController@job']);
+
+    Route::get('/training/opportunities', ['as' => 'youth.trainings.index', 'uses' => 'FrontendController@trainings']);
+    Route::get('/training/opportunities/{slug}', ['as' => 'youth.training.show', 'uses' => 'FrontendController@training']);
+});
+
 Route::group(['namespace' => 'Auth'], function (){
     Route::get('/logout', 'LoginController@logout');
 });

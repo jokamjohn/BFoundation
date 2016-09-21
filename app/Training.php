@@ -28,6 +28,14 @@ class Training extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function category()
+    {
+        return $this->belongsTo(Category::class,'categoryId');
+    }
+
+    /**
      * Create a conversation slug.
      *
      * @param  string $title
