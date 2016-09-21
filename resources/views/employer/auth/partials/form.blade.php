@@ -20,6 +20,11 @@
     </div>
 
     <button type="submit" name="submit" class="btn btn-primary btn-block m-t-10">Sign in</button>
+
+    <span class="btn  btn-block m-t-10">Or</span>
+
+    <a href="{{ route('auth.employer.register') }}" class="btn btn-success btn-block m-t-10">Sign up</a>
+
     <hr>
-    <a href="#" class="btn btn-link btn-block m-t-10">Forgot my password</a>
+    <a href="{{ url('password/reset') }}" class="btn btn-link btn-block m-t-10">Forgot my password</a>
 </form>

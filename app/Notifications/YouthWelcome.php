@@ -2,20 +2,19 @@
 
 namespace App\Notifications;
 
-
 use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class EmployerWelcome extends Notification
+class YouthWelcome extends Notification
 {
     use Queueable;
     /**
      * @var User
      */
-    public $user;
+    private $user;
 
     /**
      * Create a new notification instance.
@@ -48,12 +47,11 @@ class EmployerWelcome extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Welcome to '.config('app.name'))
-                    ->greeting('Hello '.$this->user->firstName)
-                    ->line('You are ready to post your first job if you have not yet')
-                    ->action('Post Job', route('job.create'))//Add url to create a job
-                    ->line('You can also')
-                    ->action('Post a Training', route('training.create'));
+            ->subject('Welcome to '.config('app.name'))
+            ->greeting('Hello '.$this->user->firstName)
+            ->line('One step before you start receiving email and text alerts')
+            ->action('Update Profile', '#')//TODO Add url to update profile
+            ->line('Be Hopeful all the time');
     }
 
     /**

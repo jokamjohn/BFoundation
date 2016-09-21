@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\EmployerLoginRequest;
 use App\Http\Requests\EmployerRegisterRequest;
 use App\Notifications\EmployerEmailVerification;
+use App\Notifications\EmployerWelcome;
 use App\User;
 use Auth;
 use Bluecollar\Traits\Employers\Auth\LoginEmployers;
@@ -27,7 +28,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-
+        $this->middleware('guest.employer',[ 'only' => ['register','login','verify']]);
     }
 
     /**Show the register form.
@@ -81,15 +82,20 @@ class AuthController extends Controller
      */
     public function confirmEmail($token)
     {
-
         try {
+
             $user = User::whereToken($token)->firstOrFail()->confirmEmail();
+
         } catch (ModelNotFoundException $e) {
             return redirect()->route('auth.employer.login');
         }
 
         flash()->success('Verified', 'Your email has been verified, you can login');
+
         Auth::login($user);
+
+        $user->notify(new EmployerWelcome($user));
+
         return redirect($this->redirectPath);
     }
 
@@ -105,7 +111,7 @@ class AuthController extends Controller
     /**
      * Log the user out of the application.
      *
-     * @param  Request  $request
+     * @param  Request $request
      * @return \Illuminate\Http\Response
      */
     public function logout(Request $request)

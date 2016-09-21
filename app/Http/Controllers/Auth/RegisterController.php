@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Notifications\YouthEmailVerification;
+use App\Notifications\YouthWelcome;
 use App\Profile;
 use App\User;
 use Auth;
@@ -111,6 +112,7 @@ class RegisterController extends Controller
     {
         try {
             $user = User::whereToken($token)->firstOrFail()->confirmEmail();
+
         } catch (ModelNotFoundException $e) {
 
             flash()->info('Oopos', 'This link expired');
@@ -121,6 +123,8 @@ class RegisterController extends Controller
         flash()->success('Verified', 'Your email has been verified, you can login');
 
         Auth::login($user);
+
+        $user->notify(new YouthWelcome($user));
 
         return redirect($this->redirectPath());
     }
