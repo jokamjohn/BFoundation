@@ -70,4 +70,12 @@ class User extends Authenticatable
         return $this->belongsToMany(Training::class)->withTimestamps();
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
+
 }

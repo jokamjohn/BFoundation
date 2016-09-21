@@ -11,6 +11,7 @@ use Auth;
 use Bluecollar\Traits\Employers\Auth\LoginEmployers;
 use Bluecollar\Traits\Employers\Auth\RegisterEmployers;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -48,13 +49,11 @@ class AuthController extends Controller
     {
         $user = $this->createUser($request);
 
-        Auth::login($user);//TODO show note to user to verify mail.
-
         $user->notify(new EmployerEmailVerification($user->token));
 
         flash()->success('Sign Up', 'Successfully Signed up');
 
-        return redirect($this->redirectPath);
+        return redirect()->route('employer.verify.email');
     }
 
     /**Login view for employers.
@@ -92,5 +91,41 @@ class AuthController extends Controller
         flash()->success('Verified', 'Your email has been verified, you can login');
         Auth::login($user);
         return redirect($this->redirectPath);
+    }
+
+    /**Show verification note to a new registered partner.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function verify()
+    {
+        return view('employer.auth.verify');
+    }
+
+    /**
+     * Log the user out of the application.
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+
+        $request->session()->flush();
+
+        $request->session()->regenerate();
+
+        return redirect('/employer/login');
+    }
+
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     */
+    protected function guard()
+    {
+        return Auth::guard();
     }
 }

@@ -4,7 +4,7 @@
     @include('frontend.partials.links')
     @include('employer.backend.partials.backend-css')
 
-    <title>{{ config('app.name') }}@yield('title')</title>
+    <title>{{ config('app.name') }} | @yield('title')</title>
 
 </head>
 <body>

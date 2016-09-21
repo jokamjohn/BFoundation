@@ -9,7 +9,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand brand-font" href="{{ url('/') }}">Blue Collar <span
+            <a class="navbar-brand brand-font" href="{{ url('/') }}">{{ config('app.name') }}<span
                         class="label label-primary">Beta</span> </a>
         </div>
 
